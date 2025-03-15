@@ -18,7 +18,7 @@ import image11 from "../assets/Images/image11.png";
 import image12 from "../assets/Images/image12.png";
 
 function ImageSlider() {
-  const images = [image1, image2, image3,image4,image5,image6,image7,image9,image11,image12];
+  const images = [image1,image3,image4,image5,image6,image7,image9,image2,image11,image12];
 
   return (
     <div className="w-full px-10 py-5 mt-30">

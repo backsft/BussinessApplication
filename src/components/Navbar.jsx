@@ -16,9 +16,9 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/" className="hover:text-blue-600">Home</Link>
-          <Link to="/about" className="hover:text-blue-600">About</Link>
+          <Link to="/" className="hover:text-blue-600">Home</Link>          
           <Link to="/services" className="hover:text-blue-600">Services</Link>
+          <Link to="/about" className="hover:text-blue-600">About</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
           <Link to="/login">
             <button className="bg-blue-600 text-white px-4 py-0.3 rounded-md hover:bg-blue-700">
