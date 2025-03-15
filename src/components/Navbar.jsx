@@ -11,7 +11,7 @@ function Navbar() {
         
         {/* Logo (redirects to Home) */}
         <Link to="/" className="text-2xl font-bold text-blue-600">
-          MyBusiness
+          CodingZone
         </Link>
 
         {/* Desktop Menu */}
@@ -21,7 +21,7 @@ function Navbar() {
           <Link to="/services" className="hover:text-blue-600">Services</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
           <Link to="/login">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+            <button className="bg-blue-600 text-white px-4 py-0.3 rounded-md hover:bg-blue-700">
               Login
             </button>
           </Link>
