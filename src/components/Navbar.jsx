@@ -1,11 +1,32 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import SignUpModal from "./SignUpModal"; // Import the modal component
+import SignUpModal from "./SignUpModal";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
-  const [isModalOpen, setIsModalOpen] = useState(false); // Sign-up modal state
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("accessToken"));
+  const navigate = useNavigate();
+
+  // Listen for changes in localStorage (detects login/logout)
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsAuthenticated(!!localStorage.getItem("accessToken"));
+    };
+
+    window.addEventListener("storage", checkAuth);
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, []);
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setIsAuthenticated(false);
+    navigate("/login");
+  };
 
   return (
     <nav className="bg-white shadow-md fixed w-full z-10 top-0">
@@ -23,20 +44,29 @@ function Navbar() {
           <Link to="/about" className="hover:text-blue-600">About</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
 
-          {/* Login & Sign Up */}
-          <div className="space-x-3">
-            <Link to="/login">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                Login
+          {/* Conditionally Show Login/Signup or Logout */}
+          {!isAuthenticated ? (
+            <div className="space-x-3">
+              <Link to="/login">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                  Login
+                </button>
+              </Link>
+              <button 
+                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Sign Up
               </button>
-            </Link>
+            </div>
+          ) : (
             <button 
-              className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-              onClick={() => setIsModalOpen(true)}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+              onClick={handleLogout}
             >
-              Sign Up
+              Logout
             </button>
-          </div>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -56,21 +86,32 @@ function Navbar() {
           <Link to="/services" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>Services</Link>
           <Link to="/contact" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>Contact</Link>
 
-          {/* Mobile View: Login & Sign Up Buttons */}
-          <Link to="/login" onClick={() => setIsOpen(false)}>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-              Login
+          {/* Conditionally Show Login/Signup or Logout */}
+          {!isAuthenticated ? (
+            <>
+              <Link to="/login" onClick={() => setIsOpen(false)}>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                  Login
+                </button>
+              </Link>
+              <button 
+                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setIsOpen(false);
+                }}
+              >
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <button 
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+              onClick={handleLogout}
+            >
+              Logout
             </button>
-          </Link>
-          <button 
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-            onClick={() => {
-              setIsModalOpen(true);
-              setIsOpen(false);
-            }}
-          >
-            Sign Up
-          </button>
+          )}
         </div>
       )}
 
