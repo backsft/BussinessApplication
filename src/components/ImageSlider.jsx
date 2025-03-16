@@ -19,7 +19,7 @@ function ImageSlider() {
   const images = [image1, image3, image4, image5, image6, image7, image9, image2, image11, image12];
 
   return (
-    <div className="w-full px-10 py-5 mt-30">
+    <div className="w-full px-10 py-5 mt-40">
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={40}
@@ -32,7 +32,7 @@ function ImageSlider() {
         navigation
         autoplay={{ delay: 3000 }}
         loop={true}
-        className="w-full max-w-6xl mx-auto"
+        className="w-full max-w-7xl mx-auto"
       >
         {images.map((img, index) => (
           <SwiperSlide key={index}>
