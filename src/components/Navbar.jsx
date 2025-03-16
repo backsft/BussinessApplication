@@ -6,34 +6,22 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // State for mobile menu
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-20 top-0">
+    <nav className="bg-white shadow-md fixed w-full z-50 top-0">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         
         {/* Logo (redirects to Home) */}
-        <Link to="/" className="text-2xl font-extrabold text-blue-600 tracking-wide hover:text-blue-700 transition duration-300">
+        <Link to="/" className="text-2xl font-bold text-blue-600">
           CodingZone
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          {/* Corrected Home Link */}
-          <Link to="/" className="relative group transition duration-300 hover:text-blue-600">
-            Home
-            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-          </Link>
-          {/* Other Pages */}
-          {["Services", "About", "Contact"].map((item, index) => (
-            <Link
-              key={index}
-              to={`/${item.toLowerCase()}`}
-              className="relative group transition duration-300 hover:text-blue-600"
-            >
-              {item}
-              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
-            </Link>
-          ))}
+        <div className="hidden md:flex space-x-6">
+          <Link to="/" className="hover:text-blue-600">Home</Link>          
+          <Link to="/services" className="hover:text-blue-600">Services</Link>
+          <Link to="/about" className="hover:text-blue-600">About</Link>
+          <Link to="/contact" className="hover:text-blue-600">Contact</Link>
           <Link to="/login">
-            <button className="bg-blue-600 text-white px-4 py-1 rounded-md shadow-md hover:bg-blue-700 transition duration-300">
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
               Login
             </button>
           </Link>
@@ -41,7 +29,7 @@ function Navbar() {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-2xl text-gray-700 focus:outline-none"
+          className="md:hidden text-2xl z-50 relative"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FiX /> : <FiMenu />}
@@ -49,28 +37,17 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu (Dropdown) */}
-      <div className={`md:hidden bg-white shadow-md absolute w-full left-0 top-16 flex flex-col items-center py-4 space-y-4 transition-transform duration-300 ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}>
-        {/* Corrected Home Link */}
-        <Link 
-          to="/" 
-          className="text-gray-700 hover:text-blue-600 transition duration-300"
-          onClick={() => setIsOpen(false)}
-        >
-          Home
-        </Link>
-        {/* Other Pages */}
-        {["Services", "About", "Contact"].map((item, index) => (
-          <Link 
-            key={index} 
-            to={`/${item.toLowerCase()}`} 
-            className="text-gray-700 hover:text-blue-600 transition duration-300"
-            onClick={() => setIsOpen(false)}
-          >
-            {item}
-          </Link>
-        ))}
+      <div 
+        className={`absolute top-16 left-0 w-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        } md:hidden flex flex-col items-center py-4 space-y-4`}
+      >
+        <Link to="/" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>Home</Link>
+        <Link to="/about" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>About</Link>
+        <Link to="/services" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>Services</Link>
+        <Link to="/contact" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>Contact</Link>
         <Link to="/login" onClick={() => setIsOpen(false)}>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-300">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
             Login
           </button>
         </Link>
